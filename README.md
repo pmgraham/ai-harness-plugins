@@ -1,5 +1,8 @@
 # AI Harness Plugins
 
+[![Validate Plugins](https://github.com/pmgraham/ai-harness-plugins/actions/workflows/validate.yml/badge.svg)](https://github.com/pmgraham/ai-harness-plugins/actions/workflows/validate.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+
 A plugin-first monorepo of cross-harness AI agent plugins (Antigravity, with room for Claude Code, Cursor, and other compatible harnesses).
 
 ## Structure
@@ -42,3 +45,15 @@ agy plugin list --json
 ## Multi-Tool Validation Note
 
 When adding manifests for other harnesses (e.g., `.claude-plugin/plugin.json`, `.mcp.json`), Antigravity safely ignores those files during packaging. Use the JSON filter in `.github/workflows/validate.yml` (documented in [Antigravity Build Plugins](https://antigravity.google/docs/build-plugins#warnings-in-multi-tool-repositories)) to fail CI on real errors/warnings while ignoring expected other-tool files.
+
+## Contributing
+
+Contributions are welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) for layout conventions, local validation commands, and PR guidelines. Participation is governed by the [Code of Conduct](./CODE_OF_CONDUCT.md).
+
+## Security
+
+To report a security issue privately, see [SECURITY.md](./SECURITY.md).
+
+## License
+
+Released under the [MIT License](./LICENSE).

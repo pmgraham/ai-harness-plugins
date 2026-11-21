@@ -5,6 +5,13 @@ on:
     branches: [main]
   pull_request:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -14,10 +21,10 @@ jobs:
       - name: Validate JSON files
         run: |
           set -euo pipefail
-          for f in $(find plugins -type f -name '*.json'); do
+          while IFS= read -r -d '' f; do
             echo "Checking JSON: $f"
             jq empty "$f"
-          done
+          done < <(find plugins -type f -name '*.json' -print0)
 
       - name: Verify required Antigravity plugin structure
         run: |
@@ -39,4 +46,18 @@ jobs:
             logo=$(jq -r '.logo' "$manifest")
             test -f "$dir/$logo"
             test -f "$dir/README.md"
+
+            if [ -f "$dir/mcp_config.json" ]; then
+              echo "Checking MCP config: $dir/mcp_config.json"
+              jq -e '(.mcpServers | type == "object" and length > 0)' "$dir/mcp_config.json" > /dev/null
+            fi
+
+            if [ -d "$dir/skills" ]; then
+              while IFS= read -r -d '' skill; do
+                echo "Checking skill frontmatter: $skill"
+                frontmatter=$(awk 'NR==1 && $0=="---" {in_fm=1; next} in_fm && $0=="---" {exit} in_fm {print}' "$skill")
+                grep -Eq '^name:[[:space:]]*[^[:space:]]+' <<< "$frontmatter"
+                grep -Eq '^description:' <<< "$frontmatter"
+              done < <(find "$dir/skills" -type f -name 'SKILL.md' -print0)
+            fi
           done

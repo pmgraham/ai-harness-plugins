@@ -1,0 +1,35 @@
+name: Bug Report
+description: Report a problem with a plugin, manifest, rule, skill, or CI check.
+labels: ["bug"]
+body:
+  - type: input
+    id: plugin
+    attributes:
+      label: Plugin
+      placeholder: e.g., tiller
+    validations:
+      required: true
+  - type: input
+    id: harness
+    attributes:
+      label: AI Harness & Version
+      placeholder: e.g., Antigravity (agy v...)
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the issue and expected behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      placeholder: |
+        1. Install or enable plugin ...
+        2. Run prompt or command ...
+        3. Observe error ...
+    validations:
+      required: false

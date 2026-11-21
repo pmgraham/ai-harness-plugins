@@ -1,0 +1,25 @@
+name: Plugin / Harness Request
+description: Propose a new plugin or support for another AI harness.
+labels: ["enhancement"]
+body:
+  - type: input
+    id: target
+    attributes:
+      label: Plugin or Harness Name
+      placeholder: e.g., Claude Code support for tiller, or new plugin for ...
+    validations:
+      required: true
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Summary & Use Case
+      description: What problem does this solve and what components (MCP, skills, rules) are needed?
+    validations:
+      required: true
+  - type: input
+    id: docs
+    attributes:
+      label: Upstream Documentation or MCP Server URL
+      placeholder: https://...
+    validations:
+      required: false
