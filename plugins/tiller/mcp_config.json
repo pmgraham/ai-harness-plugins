@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "tiller-mcp": {
+      "url": "https://ai-tools.tillermoney.com/mcp"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "tiller",
+  "displayName": "Tiller Finance",
+  "version": "0.1.0",
+  "description": "Connect to Tiller Money's MCP server to query transactions, analyze spending and budgets, and categorize personal finance spreadsheets.",
+  "logo": "assets/logo.png",
+  "suggestedPrompts": [
+    "Summarize my spending by category this month compared to last month",
+    "Find uncategorized transactions and suggest categories for my review",
+    "Identify recurring subscriptions and flag any recent price changes"
+  ],
+  "author": {
+    "name": "Martin Graham",
+    "url": "https://github.com/pmgraham"
+  },
+  "homepage": "https://github.com/pmgraham/ai-harness-plugins/tree/main/plugins/tiller",
+  "repository": "https://github.com/pmgraham/ai-harness-plugins",
+  "license": "MIT",
+  "keywords": [
+    "tiller",
+    "personal-finance",
+    "budgeting",
+    "transactions",
+    "spreadsheets",
+    "mcp"
+  ]
+}

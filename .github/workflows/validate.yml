@@ -1,0 +1,42 @@
+name: Validate Plugins
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate JSON files
+        run: |
+          set -euo pipefail
+          for f in $(find plugins -type f -name '*.json'); do
+            echo "Checking JSON: $f"
+            jq empty "$f"
+          done
+
+      - name: Verify required Antigravity plugin structure
+        run: |
+          set -euo pipefail
+          for dir in plugins/*; do
+            [ -d "$dir" ] || continue
+            manifest="$dir/.antigravity-plugin/plugin.json"
+            [ -f "$manifest" ] || manifest="$dir/plugin.json"
+            echo "Checking plugin manifest: $manifest"
+            test -f "$manifest"
+            jq -e '
+              (.name | type == "string" and test("^[a-z0-9]+(-[a-z0-9]+)*$")) and
+              (.displayName | type == "string" and length > 0) and
+              (.version | type == "string" and length > 0) and
+              (.description | type == "string" and length > 0) and
+              (.logo | type == "string" and length > 0) and
+              (.author != null)
+            ' "$manifest" > /dev/null
+            logo=$(jq -r '.logo' "$manifest")
+            test -f "$dir/$logo"
+            test -f "$dir/README.md"
+          done
